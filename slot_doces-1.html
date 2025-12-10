@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Slot de Doces</title>
+<style>
+body { background: #080010; font-family: Arial, sans-serif; color: white; text-align: center; padding: 20px; }
+h1 { color: #ff00ff; text-shadow: 0 0 15px #ff00ff; }
+#tela-inicial { position: fixed; top:0; left:0; width:100%; height:100%; background: radial-gradient(circle,#300030,#000); display:flex; flex-direction:column; justify-content:center; align-items:center; gap:20px; }
+#slot { display:flex; justify-content:center; margin:20px auto; gap:15px; }
+.reel { width:90px; height:90px; background:#1a0020; border:2px solid #ff00ff; border-radius:10px; display:flex; justify-content:center; align-items:center; font-size:40px; animation:glow 1s infinite alternate; }
+@keyframes glow { from{box-shadow:0 0 5px #ff00ff;} to{box-shadow:0 0 20px #ff00ff;} }
+button { margin-top:20px; padding:12px 25px; background:#ff00ff; color:black; border:none; border-radius:8px; font-size:18px; cursor:pointer; box-shadow:0 0 10px #ff00ff; }
+#resultado { margin-top:20px; font-size:22px; color:#00ffea; text-shadow:0 0 8px #00ffea; }
+#pontos { margin-top:15px; font-size:22px; color:#00ff66; text-shadow:0 0 8px #00ff66; }
+</style>
+</head>
+<body>
+<div id="tela-inicial">
+<h1>🍬 Slot Gamer de Doces 🍭</h1>
+<p>clique para começar</p>
+<button onclick="iniciar()">Iniciar 🎮</button>
+</div>
+<h1>🎮 Slot de Doces 🍬</h1>
+<p>Gire e tente combinar os doces!</p>
+<h2 id="pontos">Pontos: 0</h2>
+<div id="slot">
+<div class="reel" id="r1">🍭</div>
+<div class="reel" id="r2">🍬</div>
+<div class="reel" id="r3">🍪</div>
+</div>
+<button onclick="girar()">Girar 🍬</button>
+<div id="resultado"></div>
+<audio id="somGiro" src="https://cdn.pixabay.com/audio/2022/03/15/audio_f47d174c7e.mp3"></audio>
+audio id="somGanhou" src="https://cdn.pixabay.com/audio/2022/03/15/audio_6e4e6f8cc9.mp3"></audio>
+<script>
+let pontos = 0;
+const doces = ["🍭","🍬","🍪","🍧","🍫","🧁"];
+function iniciar(){ document.getElementById("tela-inicial").style.display="none"; }
+function girar(){
+document.getElementById("somGiro").play();
+const r1 = doces[Math.floor(Math.random()*doces.length)];
+const r2 = doces[Math.floor(Math.random()*doces.length)];
+const r3 = doces[Math.floor(Math.random()*doces.length)];
+document.getElementById("r1").textContent = r1;
+document.getElementById("r2").textContent = r2;
+document.getElementById("r3").textContent = r3;
+if(r1===r2 && r2===r3){ pontos+=10; document.getElementById("resultado").textContent="🎉 3 iguais! +10 pontos!"; document.getElementById("somGanhou").play();}
+else if(r1===r2 || r2===r3 || r1===r3){ pontos+=3; document.getElementById("resultado").textContent="👍 2 iguais! +3 pontos!";}
+else{ document.getElementById("resultado").textContent="😢 Nada igual... tente de novo!";}
+document.getElementById("pontos").textContent = "Pontos: "+pontos;
+}
+</script>
+</body>
+</html>
